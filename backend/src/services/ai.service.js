@@ -30,7 +30,7 @@ const SYSTEM_PROMPT = `You are India's expert scam detection AI.
 Analyze the given content and respond ONLY in this exact JSON format, nothing else:
 {
   "verdict": "SAFE" | "SUSPICIOUS" | "SCAM",
-  "confidence": <number 0-100> %,
+  "confidence": <number 0-100>,
   "category": "Bank Fraud" | "Job Fraud" | "Phishing" | "OTP Scam" | "Other",
   "reasonHindi": "<Hindi mein explanation>",
   "reasonEnglish": "<English explanation>",

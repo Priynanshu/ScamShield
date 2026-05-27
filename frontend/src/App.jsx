@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
-// import Home from './pages/Home.jsx';
-// import Result from './pages/Result.jsx';
-// import Community from './pages/Community.jsx';
+import Home from './pages/Home.jsx';
+import Result from './pages/Result.jsx';
+import Community from './pages/Community.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 
@@ -14,7 +14,7 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        {/* <Route
+        <Route
           path="/"
           element={
             <motion.div
@@ -26,8 +26,8 @@ function AnimatedRoutes() {
               <Home />
             </motion.div>
           }
-        /> */}
-        {/* <Route
+        /> 
+       <Route
           path="/result"
           element={
             <motion.div
@@ -52,7 +52,7 @@ function AnimatedRoutes() {
               <Community />
             </motion.div>
           }
-        /> */}
+        /> 
         <Route
           path="/login"
           element={

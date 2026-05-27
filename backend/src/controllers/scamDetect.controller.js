@@ -59,6 +59,7 @@ const aiScamDetectOfUrl = async (req, res, next) => {
             aiResult: scanResult
         })
     } catch (error) {
+        console.log(error)
         next(error)
     }
 }
