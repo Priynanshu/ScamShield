@@ -7,10 +7,18 @@ import Result from './pages/Result.jsx';
 import Community from './pages/Community.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
+import { useEffect } from 'react';
+import { getMeSlice } from './features/authSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 function AnimatedRoutes() {
   const location = useLocation();
-  
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getMeSlice())
+  }, [dispatch]);
+
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>

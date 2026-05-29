@@ -6,14 +6,14 @@ import { reportToCommunitySlice, fetchAllReportsMessagesSlcie, clearReportError 
 const useReport = () => {
     const dispatch = useDispatch()
     const {reportsMessages, allReportedMessages, reportError, reportLoading} = useSelector((state) => state.report)
-
+    
     const reportToCommunityHook = useCallback(async (scamId) => {
         try {
             return await dispatch(reportToCommunitySlice(scamId))
         }catch(err) {
             throw err
         }
-    })
+    },[dispatch])
 
     const fetchAllReportsMessagesHook = useCallback(async () => {
         try {
@@ -21,11 +21,11 @@ const useReport = () => {
         }catch(err) {
             throw err
         }
-    })
+    }, [dispatch])
 
     const clearErrorHook = useCallback(() => {
         return dispatch(clearReportError())
-    })
+    }, [dispatch])
 
     return {
         reportsMessages,

@@ -11,7 +11,7 @@ async function reportToCommunityService(scamId) {
 
 async function fetchAllReportsMessagesService() {
     try {
-        const response = await apiClient.get("/repost/")
+        const response = await apiClient.get("/repost/community")
         return response.data
     }catch(error) {
         throw error.response ? error?.response?.data : new Error('Network Error'); 

@@ -14,7 +14,7 @@ const repostToCommunity = async (req, res, next) => {
         }
 
         scamMessage.isReported = true
-        scamMessage.save()
+        await scamMessage.save()
 
         return res.status(200).json({
             message: "Scam message is repost to community",
@@ -36,7 +36,7 @@ const fetchAllReportsMessages = async (req, res, next) => {
         return res.status(200).json({
             messages: "reports messages fetch successfully",
             totalReports: reportsMessages.length,
-            reportsMessages
+            reportsMessages: reportsMessages || []
         })
     }catch(err) {
         console.log(err)

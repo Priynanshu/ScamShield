@@ -1,41 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ShieldCheck, Menu, X, LogOut, User } from 'lucide-react';
+import useAuth from "../hooks/useAuth.js";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const checkAuth = () => {
-      const stored = localStorage.getItem('scamshield_current_user');
-      if (stored) {
-        try {
-          setCurrentUser(JSON.parse(stored));
-        } catch (e) {
-          setCurrentUser(null);
-        }
-      } else {
-        setCurrentUser(null);
-      }
-    };
-
-    checkAuth();
+  const {user, logoutHook} = useAuth()
     // Listen to local changes inside auth
-    window.addEventListener('authChange', checkAuth);
-    window.addEventListener('storage', checkAuth);
-
-    return () => {
-      window.removeEventListener('authChange', checkAuth);
-      window.removeEventListener('storage', checkAuth);
-    };
-  }, []);
+  
 
   const handleLogout = () => {
-    localStorage.removeItem('scamshield_current_user');
-    setCurrentUser(null);
+    logoutHook();
     setMobileMenuOpen(false);
     navigate('/');
   };
@@ -107,14 +84,14 @@ export default function Navbar() {
           {/* Button Right Actions */}
           <div className="hidden md:flex items-center gap-4">
             
-            {currentUser ? (
+            {user ? (
               <div className="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-lg p-1.5 px-3">
                 <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                   <User className="h-3.5 w-3.5" />
                 </div>
                 <div className="flex flex-col text-left">
                   <span className="text-[11px] font-medium text-gray-400">Namaste!</span>
-                  <span className="text-xs font-bold text-gray-800 leading-tight">{currentUser.name || 'Citizen'}</span>
+                  <span className="text-xs font-bold text-gray-800 leading-tight">{user.username || 'Citizen'}</span>
                 </div>
                 <button
                   onClick={handleLogout}
@@ -195,11 +172,11 @@ export default function Navbar() {
           <hr className="border-gray-100 my-1" />
 
           {/* Mobile Profile & Authenticator */}
-          {currentUser ? (
+          {user ? (
             <div className="flex items-center justify-between bg-gray-50 border border-gray-100 p-3 rounded-lg mx-3">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-bold text-gray-800">Namaste, {currentUser.name}!</span>
+                <span className="text-sm font-bold text-gray-800">Namaste, {user.username}!</span>
               </div>
               <button
                 onClick={handleLogout}

@@ -15,7 +15,7 @@ export const reportToCommunitySlice = createAsyncThunk(
             const response = await reportService.reportToCommunityService(scamId)
             return response
         }catch(err) {
-            return thunkAPI.rejectWithValue(err?.response?.message || "report to community is failed")
+            return thunkAPI.rejectWithValue(err?.message || "Report to community failed");
         }
     }
 )
@@ -27,7 +27,7 @@ export const fetchAllReportsMessagesSlcie = createAsyncThunk(
             const response = await reportService.fetchAllReportsMessagesService()
             return response
         }catch(err) {
-            return thunkAPI.rejectWithValue(err?.response?.message || "report to community is failed")
+            return thunkAPI.rejectWithValue(err?.message || "Fetching reports failed")
         }
     }
 )
@@ -53,7 +53,7 @@ const reportSlice = createSlice({
         })
         .addCase(reportToCommunitySlice.fulfilled, (state, action) => {
             state.reportLoading = false
-            state.reportsMessages = action.payload.reportsMessages || action.payload.scamMessages || action.payload
+            state.reportsMessages = action.payload.scamMessage || action.payload
         })
         .addCase(reportToCommunitySlice.rejected, (state, action) => {
             state.reportLoading = false

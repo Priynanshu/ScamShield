@@ -1,52 +1,46 @@
 import { useState, useEffect } from 'react';
-import { Search, AlertTriangle, ShieldCheck, HelpCircle, Loader2 } from 'lucide-react';
-// import { getCommunityFeed } from '../services/api.js';
+import { Search, AlertTriangle, ShieldCheck, Loader2 } from 'lucide-react';
 import ScamFeedCard from '../components/ScamFeedCard.jsx';
 import useReport from '../hooks/useReport.js';
+import StatsBar from "../components/StatsBar.jsx";
 
 export default function Community() {
-  const [activeFilter, setActiveFilter] = useState('Sabse Naye'); // 'Sabse Naye', 'Scams', 'Suspicious'
+  const [activeFilter, setActiveFilter] = useState('Sabse Naye');
   const [searchQuery, setSearchQuery] = useState('');
-  const [reports, setReports] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [errorCount, setErrorCount] = useState(null);
-  const {allReportedMessages} = useReport()
-console.log(allReportedMessages)
-  // Fetch reports on filter change
-  const fetchReports = async () => {
-    // setLoading(true);
-    // setErrorCount(null);
-    // const { data, error } = await getCommunityFeed(activeFilter);
-    // if (error) {
-    //   setErrorCount(error);
-    // } else if (data) {
-    //   setReports(data);
-    // }
-    // setLoading(false);
-  };
+  const { allReportedMessages, reportLoading, reportError, fetchAllReportsMessagesHook } = useReport();
 
   useEffect(() => {
-    fetchReports();
-  }, [activeFilter]);
+    fetchAllReportsMessagesHook();
+  }, [fetchAllReportsMessagesHook]);
 
-  // Client side search filtering based on search text input
-  const filteredReports = reports.filter((report) => {
+  const reportsSource = allReportedMessages || [];
+
+  const filteredByTab = reportsSource.filter((report) => {
+    if (!report) return false;
+    const capsVerdict = report.verdict?.toUpperCase();
+    if (activeFilter === 'Scams') return capsVerdict === 'SCAM';
+    if (activeFilter === 'Suspicious') return capsVerdict === 'SUSPICIOUS';
+    return true;
+  });
+
+  const filteredReports = filteredByTab.filter((report) => {
     if (!report) return false;
     const s = searchQuery.toLowerCase();
-    const contentMatch = report.inputContent?.toLowerCase().includes(s) || false;
+    const content = report.inputContent || report.scamMessage || '';
+    const contentMatch = content.toLowerCase().includes(s);
     const reasonHindiMatch = report.reasonHindi?.toLowerCase().includes(s) || false;
     const reasonEnglishMatch = report.reasonEnglish?.toLowerCase().includes(s) || false;
     const cityMatch = report.city?.toLowerCase().includes(s) || false;
     const typeMatch = report.inputType?.toLowerCase().includes(s) || false;
+    const categoryMatch = report.category?.toLowerCase().includes(s) || false;
     
-    return contentMatch || reasonHindiMatch || reasonEnglishMatch || cityMatch || typeMatch;
+    return contentMatch || reasonHindiMatch || reasonEnglishMatch || cityMatch || typeMatch || categoryMatch;
   });
 
   return (
     <div className="bg-white min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        
-        {/* Page Head Header */}
+        <StatsBar/>
         <div className="space-y-2 text-center md:text-left">
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Community Scam Feed</h1>
           <p className="text-sm text-gray-500 max-w-xl">
@@ -54,10 +48,8 @@ console.log(allReportedMessages)
           </p>
         </div>
 
-        {/* Action Header Panel: Filter Category Tabs + Live Searchbar */}
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between border-b border-gray-100 pb-4">
           
-          {/* Tag filters group */}
           <div className="flex bg-gray-100 p-1 rounded-lg w-full md:w-auto overflow-x-auto">
             {['Sabse Naye', 'Scams', 'Suspicious'].map((filterName) => (
               <button
@@ -74,7 +66,6 @@ console.log(allReportedMessages)
             ))}
           </div>
 
-          {/* Instant Search textbox */}
           <div className="relative w-full md:w-80 shrink-0">
             <input
               type="text"
@@ -90,18 +81,17 @@ console.log(allReportedMessages)
 
         </div>
 
-        {/* Content list panel rendering */}
-        {loading ? (
+        {reportLoading ? (
           <div className="flex flex-col items-center justify-center py-20 space-y-2">
             <Loader2 className="h-8 w-8 text-blue-600 animate-spin" />
             <p className="text-xs text-gray-500 font-medium">Community database load ho raha hai...</p>
           </div>
-        ) : errorCount ? (
+        ) : reportError ? (
           <div className="text-center p-12 bg-red-50 text-red-700 border border-red-100 rounded-xl space-y-3">
             <AlertTriangle className="h-10 w-10 text-red-600 mx-auto" />
-            <p className="font-semibold">{errorCount}</p>
+            <p className="font-semibold">{reportError}</p>
             <button
-              onClick={fetchReports}
+              onClick={() => fetchAllReportsMessagesHook()}
               className="bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded shadow hover:bg-blue-700 transition"
             >
               Phir se koshish karein
@@ -118,7 +108,7 @@ console.log(allReportedMessages)
         ) : (
           <div className="space-y-4">
             {filteredReports.map((report, idx) => (
-              <ScamFeedCard key={report.id || idx} report={report} />
+              <ScamFeedCard key={report._id || report.id || idx} report={report} />
             ))}
           </div>
         )}

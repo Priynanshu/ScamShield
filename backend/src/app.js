@@ -9,6 +9,8 @@ const authRoutes = require('./routers/auth.route');
 const scamDetectRoutes = require("./routers/scan.route")
 const repostScamRoutes = require("./routers/repost.route")
 const {setupGoogleAuth} = require("./services/oAuth.service")
+const rateLimiterMiddleware = require("./middlewares/rateLimiter.middleware")
+const helmet = require("helmet")
 
 const app = express();
 
@@ -19,8 +21,10 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }))
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
+app.use(rateLimiterMiddleware.globalRateLimit);
 app.use(passport.initialize());
 
 setupGoogleAuth()
