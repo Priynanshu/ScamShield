@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://scamshield-8x1s.onrender.com/api",
   withCredentials: true
 });
 
