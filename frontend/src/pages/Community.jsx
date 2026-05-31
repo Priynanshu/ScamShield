@@ -20,6 +20,7 @@ export default function Community() {
 
   const reportsSource = allReportedMessages || [];
 
+
   const filteredByTab = reportsSource.filter((report) => {
     if (!report) return false;
     const caps = report.verdict?.toUpperCase();

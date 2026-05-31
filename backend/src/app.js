@@ -35,7 +35,7 @@ app.use('/api/scan', scamDetectRoutes);
 app.use("/api/repost", repostScamRoutes)
 app.use(express.static(path.join(__dirname, "../public/dist")))
 
-app.get("*", (req, res) => {
+app.get("*name", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/dist", "index.html"))
 })
 
