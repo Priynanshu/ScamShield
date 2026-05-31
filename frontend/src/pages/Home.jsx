@@ -6,19 +6,19 @@ export default function Home() {
   const steps = [
     {
       num: '1',
-      title: 'Paste karo',
+      title: 'Paste it',
       desc: 'Suspicious WhatsApp message, URL Link ya image screenshot submit karo.',
       icon: <ClipboardCopy className="h-6 w-6 text-blue-600" />,
     },
     {
       num: '2',
-      title: 'AI Scan hoga',
+      title: 'Scan By AI',
       desc: 'Our customized institutional-grade Gemini AI scan will analyze it in 10 seconds.',
       icon: <Cpu className="h-6 w-6 text-blue-600 animate-pulse" />,
     },
     {
       num: '3',
-      title: 'Result dekho',
+      title: 'See Results',
       desc: 'Find out whether it is safe, suspicious, or if our Scam Alert is active.',
       icon: <ShieldCheck className="h-6 w-6 text-blue-600" />,
     },
