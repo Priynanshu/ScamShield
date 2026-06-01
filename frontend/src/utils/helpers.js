@@ -17,7 +17,7 @@ export function timeAgo(dateInput) {
   const diffDay = Math.floor(diffHr / 24);
 
   if (diffSec < 60) {
-    return "Abhi abhi";
+    return "Now";
   } else if (diffMin < 60) {
     return `${diffMin} min ago`;
   } else if (diffHr < 24) {
