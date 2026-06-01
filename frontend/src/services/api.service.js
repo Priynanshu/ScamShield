@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+
 const apiClient = axios.create({
-  baseURL: "https://scamshield-8x1s.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true
 });
 

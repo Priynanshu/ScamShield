@@ -10,7 +10,7 @@ const useAuth = () => {
 
     // Trigger Google OAuth — backend handles the rest, redirects to /auth-success
     const googleLogin = () => {
-        window.location.href = "http://localhost:3000/api/auth/google";
+        window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
     };
 
     const registerHook = useCallback(async (userData) => {
