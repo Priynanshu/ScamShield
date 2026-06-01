@@ -115,7 +115,7 @@ export default function ScanBox() {
 
       {scanLoading ? (
         <div className="p-8">
-          <Loader text="AI scanner aapka input scan kar raha hai. Kripya 10 seconds wait karein..." />
+          <Loader text="AI is sanning your input, Please wait 10 seconds..." />
         </div>
       ) : (
         <form onSubmit={handleScanSubmit} className="p-6 md:p-8 space-y-5">

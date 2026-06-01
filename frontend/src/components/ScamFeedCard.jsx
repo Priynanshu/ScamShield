@@ -133,7 +133,7 @@ export default function ScamFeedCard({ report }) {
             <button
               onClick={handleRelatable}
               disabled={busy}
-              title="Mujhe bhi aisa message aaya tha"
+              title="I also faced this!"
               className={`ml-auto flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition-all active:scale-95 bg-white text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-400 ${
                 busy ? 'opacity-60 cursor-wait' : 'cursor-pointer'
               }`}
