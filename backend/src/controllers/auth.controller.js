@@ -155,13 +155,13 @@ const googleCallback = (req, res) => {
 
     // 3. ✅ DO THIS: Redirect to Frontend AuthSuccess page
     // Hum token ko URL mein bhejenge taaki humara React component usey read kar sake
-    const frontendURL = `http://scam-shield-chi-two.vercel.app/auth-success?token=${token}`;
+    const frontendURL = `${process.env.FRONTEND_URL}/auth-success?token=${token}`;
     
     res.redirect(frontendURL);
 
   } catch (error) {
     console.error("Google Auth Error:", error);
-    res.redirect(`http://scam-shield-chi-two.vercel.app/login?error=auth_failed`);
+    res.redirect(`${process.env.FRONTEND_URL}/login?error=auth_failed`);
   }
 };
 

@@ -11,13 +11,12 @@ const repostScamRoutes = require("./routers/repost.route")
 const {setupGoogleAuth} = require("./services/oAuth.service")
 const rateLimiterMiddleware = require("./middlewares/rateLimiter.middleware")
 const helmet = require("helmet")
-const path = require("path")
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(cors({
-    origin: "http://scam-shield-chi-two.vercel.app",
+    origin: ["http://localhost:5173", "https://scam-shield-chi-two.vercel.app"],
     methods: ["POST", "GET", "DELETE"],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -33,11 +32,6 @@ setupGoogleAuth()
 app.use('/api/auth', authRoutes);
 app.use('/api/scan', scamDetectRoutes);
 app.use("/api/repost", repostScamRoutes)
-app.use(express.static(path.join(__dirname, "../public/dist")))
-
-app.get("*name", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/dist", "index.html"))
-})
 
 app.use(errorHandler);
 
