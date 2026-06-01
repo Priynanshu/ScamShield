@@ -123,7 +123,7 @@ export default function Navbar() {
               id="btn-navbar-scan"
               className="bg-blue-600 text-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-blue-700 shadow-sm active:translate-y-[1px] transition cursor-pointer"
             >
-              Scan Karo
+              Scan 
             </button>
           </div>
 
