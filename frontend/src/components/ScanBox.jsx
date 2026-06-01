@@ -243,7 +243,7 @@ export default function ScanBox() {
             }`}
           >
             <Search className="h-4 w-4" />
-            Scan Karo
+            Click To Scan
           </button>
 
         </form>
